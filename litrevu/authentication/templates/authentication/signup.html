@@ -9,10 +9,11 @@
 {% endif %}
 <form method="POST">
     {{ form.as_p }}
-    {% crsf_token %}
-    <button type="submit">Retour</button>
+    {% csrf_token %}    
     <button type="submit">S'inscrire</button>
-
 </form>
+<a href="{% url 'home' %}">
+    <button type="submit">Retour</button>
+</a>
 
 {% endblock content %}

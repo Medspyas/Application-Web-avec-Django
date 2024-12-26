@@ -131,3 +131,8 @@ AUTH_USER_MODEL = 'authentication.User'
 
 
 LOGIN_REDIRECT_URL = '/connected/'
+
+LOGOUT_REDIRECT_URL = '/'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
