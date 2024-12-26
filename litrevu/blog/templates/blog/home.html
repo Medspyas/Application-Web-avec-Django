@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<div class="home-container">
+    <div class="signup-section">
+        <h2>Inscrivez-vous maintenant</h2>
+        <button type="submit">S'incrire</button>
+
+    </div>
+
+
+    <div class="login-section">
+        <h2>Connectez-vous</h2>
+        <form method="POST" action="{% url 'login' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Se connecter</button>
+        </form>
+    </div>
+</div>
+
+
+
+{% endblock %}
