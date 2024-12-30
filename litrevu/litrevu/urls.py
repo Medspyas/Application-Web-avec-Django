@@ -20,7 +20,7 @@ from django.contrib import admin
 from django.contrib.auth.views import (
     LoginView, LogoutView, PasswordChangeView, PasswordChangeDoneView)
 from django.urls import path
-from blog.views import home , connected
+from blog.views import home , dashboard
 from authentication.views import signup_page
 
 
@@ -30,7 +30,7 @@ urlpatterns = [
     path('login/', LoginView.as_view(redirect_authenticated_user=True), name='login'),
     path('logout', LogoutView.as_view(), name='logout'),
     path('signup/', signup_page, name='signup'),
-    path('connected/', connected, name='connected' ),
+    path('dashboard/', dashboard, name='dashboard' ),
     
 ]
 
