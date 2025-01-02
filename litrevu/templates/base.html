@@ -5,13 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LITReview</title>
-    <link rel="stylesheet" href="{% static 'litrevu/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'litrevu/styles.css' %}?v={{ STATIC_VERSION }}">
 </head>
 <body>
 
      <div class="container">
         <header class="title-section">
             <h1 class="title">LITReview</h1>
+            {% block menu %}
+            {% endblock %}
         </header>
 
         <main class="content-section">

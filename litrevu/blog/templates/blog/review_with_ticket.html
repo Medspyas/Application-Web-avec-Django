@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Créer une critique</h2>
+<div class="review-ticket-container">
+    <p>Vous êtes en train de poster en réponse à :</p>
+    <div class="ticket-details">
+        <h3>{{ ticket.title }}</h3>
+        <p>{{ ticket.description }}</p>
+        {% if ticket.image %}
+            <img src="ticket.imgage.url" alt="Image pour le ticket {{ticket.title}}">
+        {% endif %}
+        <small>Posté par {{ ticket.user.username }} le {{ ticket.created_at }}</small>
+    </div>
+
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Envoyer</button>
+    </form>
+</div>
+
+{% endblock %}

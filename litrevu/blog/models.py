@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.db import models
 from django.core.validators import MaxValueValidator , MinValueValidator
+from django.urls import reverse
 
 
 class Ticket(models.Model):
@@ -45,8 +46,13 @@ class Review(models.Model):
         blank=True,
         related_name='reviews'
     )
+    title = models.CharField(max_length=200)
+    description = models.TextField(max_length=1000, blank=True, null=True)
+    image = models.ImageField(upload_to='reviews/', blank=True, null=True)
 
+    review_title = models.CharField(max_length=200)
     content = models.TextField(max_length=2000)
+    
     rating = models.IntegerField(
         null=True, blank=True,
         validators=[
@@ -55,6 +61,9 @@ class Review(models.Model):
         ]
     )
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def get_absolute_url(self):
+        return reverse('dashboard')
 
     def __str__(self):
         if self.ticket:

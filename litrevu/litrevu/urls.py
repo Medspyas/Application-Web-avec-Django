@@ -20,7 +20,7 @@ from django.contrib import admin
 from django.contrib.auth.views import (
     LoginView, LogoutView, PasswordChangeView, PasswordChangeDoneView)
 from django.urls import path
-from blog.views import home , dashboard
+from blog.views import home , dashboard, TicketCreateView, ReviewWithTicket, ReviewWithoutTicket, TicketUpdate, TicketDelete
 from authentication.views import signup_page
 
 
@@ -31,6 +31,11 @@ urlpatterns = [
     path('logout', LogoutView.as_view(), name='logout'),
     path('signup/', signup_page, name='signup'),
     path('dashboard/', dashboard, name='dashboard' ),
+    path('request-ticket/', TicketCreateView.as_view(), name = 'request_ticket'),
+    path('review/ticket/<int:ticket_id>/', ReviewWithTicket.as_view(), name='review_with_ticket'),
+    path('review/create/', ReviewWithoutTicket.as_view(), name='review_without_ticket'),
+    path('ticket/<int:pk>/edit/', TicketUpdate.as_view(), name='ticket_edit'), 
+    path('ticket/<int:pk>/delete/', TicketDelete.as_view(), name='ticket_delete'), 
     
 ]
 

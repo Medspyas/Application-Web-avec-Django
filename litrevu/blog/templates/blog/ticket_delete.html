@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<div class="review-create-container">
+    <h2>Confirmer la suppression du ticket</h2>
+    <p>Voulez vous vraiment supprimer ?</p>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Oui</button>
+    </form>
+    <a href="{% url 'dashboard' %}">Annuler</a>
+</div>
+
+{% endblock %}
