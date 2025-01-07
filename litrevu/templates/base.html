@@ -16,7 +16,7 @@
                 <ul class="menu-list">
                     <li><a href="{% url 'dashboard' %}">Flux</a></li>
                     <li><a href="{% url 'user_posts' %}">Posts</a></li>
-                    <li><a href="">Abonnements</a></li>
+                    <li><a href="{% url 'manage_follows' %}">Abonnements</a></li>
                     <li><a href="#" onclick="document.getElementById('logout-form').submit();">Se déconnecter</a></li>
                     <form id="logout-form" method="POST" action="{% url 'logout' %}" style="display: none;">{% csrf_token %}</form>
                 </ul>       

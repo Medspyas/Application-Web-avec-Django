@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+
+<h1>Suivre d'autres utilisateurs</h1>
+
+<form method="POST">
+    {% csrf_token %}
+    <input type="text" name="followed_username" placeholder="Nom d'utilisateur" required>
+    <button type="submit">Envoyer</button>
+</form>
+
+<h2>Abonnements</h2>
+<table>
+    {% for follow in following %}
+    <tr>
+        <td>{{follow.followed.username}}</td>
+        <td>
+            <form method="POST" action="{% url 'unfollow' follow.followed.id %}">
+                {% csrf_token %}
+                <button type="submit">Désabonner</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+<h2>Abonnés</h2>
+<table>
+    {% for follow in followers %}
+    <tr>
+        <td>{{follow.follower.username}}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

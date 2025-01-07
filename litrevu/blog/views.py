@@ -1,20 +1,37 @@
 from itertools import chain
 from django.db.models import CharField, Value
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.cache import never_cache
 from .models import *
+from authentication.forms import CustomAuthenticationForm
 from django.views.generic.edit import  CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.http import Http404
+from django.contrib.auth import get_user_model, authenticate, login
+from django.contrib import messages
 
+User = get_user_model()
 
 
 @never_cache
 def home(request):    
-    form = AuthenticationForm()
+    form = CustomAuthenticationForm()
+
+    if request.method == 'POST':
+        form = CustomAuthenticationForm(data=request.POST)
+        if form.is_valid():
+            user = authenticate(
+                username=form.cleaned_data.get('username'),
+                password=form.cleaned_data.get('password')
+            )
+            if user is not None:
+                login(request, user) 
+                return redirect('dashboard')
+           
+
     return render(request, 'blog/home.html', {'form': form})
 
 
@@ -147,6 +164,35 @@ class PostDelete(DeleteView):
     def get_success_url(self):
         return reverse_lazy('dashboard')
     
+
+@login_required
+def manage_follows(request):
+    if request.method == 'POST':
+        followed_username = request.POST.get('followed_username')
+        followed_user = get_object_or_404(User, username=followed_username)
+
+        if followed_user == request.user:
+            messages.warning(request, f'Vous suivez déja {followed_user.username}')
+            return redirect('manage_follows')
+        
+        UserFollows.objects.create(follower=request.user, followed=followed_user)
+        messages.success(request, f'Vous suivez maintenant {followed_user.username}')
+        return redirect('manage_follows')
+    following = UserFollows.objects.filter(follower=request.user)
+    followers = UserFollows.objects.filter(followed=request.user)
+
+    return render(request, 'blog/manage_follows.html', {'following': following, 'followers': followers})
+
+@login_required
+def unfollow(request,  user_id):
+    followed_user = get_object_or_404(User, id=user_id)
+    follow = UserFollows.objects.filter(follower=request.user, followed=followed_user).first()
+
+    if follow:
+        follow.delete()
+        messages.success(request, f'Vous vous êtes désabonné de {followed_user.username}')
+    
+    return redirect('manage_follows')
 
 
     

@@ -20,14 +20,13 @@ from django.contrib import admin
 from django.contrib.auth.views import (
     LoginView, LogoutView, PasswordChangeView, PasswordChangeDoneView)
 from django.urls import path
-from blog.views import home , dashboard, user_posts ,TicketCreateView, ReviewWithTicket, ReviewWithoutTicket, TicketUpdate, PostDelete, ReviewUpdate
+from blog.views import home , dashboard, user_posts ,TicketCreateView, ReviewWithTicket, ReviewWithoutTicket, TicketUpdate, PostDelete, ReviewUpdate, manage_follows, unfollow
 from authentication.views import signup_page
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', home, name='home'),
-    path('login/', LoginView.as_view(redirect_authenticated_user=True), name='login'),
+    path('', home, name='home'),   
     path('logout', LogoutView.as_view(), name='logout'),
     path('signup/', signup_page, name='signup'),
     path('dashboard/', dashboard, name='dashboard' ),
@@ -38,7 +37,8 @@ urlpatterns = [
     path('ticket/<int:pk>/edit/', TicketUpdate.as_view(), name='ticket_edit'), 
     path('review/<int:pk>/edit/', ReviewUpdate.as_view(), name='review_edit'),
     path('<str:model>/<int:pk>/delete/', PostDelete.as_view(), name='post_delete'), 
-    
+    path('follows/', manage_follows, name= 'manage_follows'),
+    path('unfollow/<int:user_id>/', unfollow, name= 'unfollow'),
 ]
 
 if settings.DEBUG:
