@@ -10,21 +10,20 @@
 <body>
 
      <div class="container">
-        <header class="title-section">
-            {% if user.is_authenticated %}
-            <nav class="menu">
-                <ul class="menu-list">
-                    <li><a href="{% url 'dashboard' %}">Flux</a></li>
-                    <li><a href="{% url 'user_posts' %}">Posts</a></li>
-                    <li><a href="{% url 'manage_follows' %}">Abonnements</a></li>
-                    <li><a href="#" onclick="document.getElementById('logout-form').submit();">Se déconnecter</a></li>
-                    <form id="logout-form" method="POST" action="{% url 'logout' %}" style="display: none;">{% csrf_token %}</form>
-                </ul>       
-            </nav>
-            {% endif %}
-            <h1 class="title">LITReview</h1>
-            {% block menu %}
-            {% endblock %}
+        <header class="title-section">            
+                <h1 class="title">LITReview</h1>
+                {% if user.is_authenticated %}
+                <nav class="menu">
+                    <ul class="menu-list">
+                        <li><a href="{% url 'dashboard' %}">Flux</a></li>
+                        <li><a href="{% url 'user_posts' %}">Posts</a></li>
+                        <li><a href="{% url 'manage_follows' %}">Abonnements</a></li>
+                        <li><a href="#" onclick="document.getElementById('logout-form').submit();">Se déconnecter</a></li>
+                        <form id="logout-form" method="POST" action="{% url 'logout' %}" style="display: none;">{% csrf_token %}</form>
+                    </ul>       
+                </nav>
+                {% endif %}    
+           
         </header>
 
         <main class="content-section">

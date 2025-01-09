@@ -7,7 +7,7 @@
     <div class="signup-section">
         <h2>Inscrivez-vous maintenant</h2>
         <a href="{% url 'signup' %}">
-            <button class="style-button" type="submit">S'incrire</button>
+            <button class="style-button resize" type="submit">S'incrire</button>
         </a>
     </div>
 
@@ -19,7 +19,7 @@
         <form method="POST" action="">
             {% csrf_token %}
             {{ form.as_p }}
-            <button class="style-button" type="submit">Se connecter</button>
+            <button class="style-button resize" type="submit">Se connecter</button>
         </form>
     </div>
 </div>

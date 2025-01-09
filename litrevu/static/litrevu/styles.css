@@ -15,20 +15,37 @@ body{
     width: 100% ;
     max-width: 1000px;
     margin-top: 40px;
+    padding: 0, 20px;
 }
+
+
 
 .title-section{
+    display: flex;
+    max-width: 1000px;
+    height: 50px;
+    margin: 0 auto;
     padding: 5px;
     border: 2px solid #000;
+    position: relative;
     text-align: center;
     border-bottom: none;
+    align-items: center;
+    justify-content: space-between;
 }
+    
 
 .title{
-    margin: 15px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
     font-size: 22px;
     font-weight: lighter;
+    text-align: center;
+ 
 }
+
 
 .content-section{
     border: 2px solid #000;
@@ -37,9 +54,13 @@ body{
 }
 
 .home-container{
-    display: flex;
+    display: flex;    
     justify-content: space-between;
-    align-items: center;
+    gap: 30px;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    
 }
 
 .home-container h2 {
@@ -50,46 +71,86 @@ body{
 }
 
 .login-section{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     margin-top: 0px;
     padding: 0;
+}
+
+.login-section h2{
+    text-align: center;
 }
 .signup-section{
     margin-top: 40px;
 }
 
 
-.dashboard-container{
-    margin: 0 auto;
-    max-width: 800px;
-    padding: 20px;
-    font-family: Arial, sans-serif;
+form input[type="text"], form input[type="password"] {
+    width: 350px;
+    padding: 10px;
+    font-size: 16px;
+    height: 15px;
+    border: 1px solid black;
+    text-align: center;
+    margin: 0;    
 }
+
+form input[type="text"] {
+    margin-bottom: -20px;
+}
+
+form input[type="password"] {
+    margin-top: -10px;
+}
+
+form input::placeholder {
+    color: #000;
+}
+
+
 
 
 .actions{
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    margin-left:0;
     margin-bottom: 20px;
+    gap: 50px;
 }
 
 
 .style-button{
-    padding: 10px 20px;
+    
+    width: 280px;
+    height: 40px;
+    font-size: 14px;    
     background-color: #fff;
     border: 1px solid #000;
     border-radius: 5px;
     cursor: pointer;
 }
 
+.style-button.resize {
+    width: 140px;
+}
+
+
+
 .posts-container{
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 20px;
+    margin: 0 auto;
 }
 
-.ticket, .review{
-    border:1px solid #000;
+.ticket, .review{    
     padding: 15px;
+    width: 95%;
+    overflow: hidden;
+    box-sizing: border-box;
 
 }
 
@@ -105,16 +166,19 @@ body{
 
 }
 
-.logout-button{
-    margin-top: 20px;
+.login-section form  {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0;
 }
 
 
+
+
 .menu{
-    display: flex;
-    justify-content: flex-end;    
-    padding: 10px 20px;
-    align-items: center;
+   margin-left: auto;
+   
 
 }
 
@@ -124,6 +188,8 @@ body{
     gap: 20px;
     margin: 0;
     padding: 0;
+    justify-content: flex-end;
+    flex-grow: 1;
 }
 
 
@@ -137,3 +203,42 @@ body{
 .menu-list a:hover{
     color: #007bff;
 }
+
+
+.title-post{
+    font-weight: lighter;
+}
+
+
+.signup-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.signup-container form input {
+    width: 400px;
+    margin-bottom: 20px;
+}
+
+
+.button-group {
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+}
+
+.button-group a {
+    display: inline-block;
+    text-align: center;
+    text-decoration: None;
+    font-size: 14px;
+    color: #000;
+    line-height: 40px;
+    height: 38px;
+
+}
+
+
