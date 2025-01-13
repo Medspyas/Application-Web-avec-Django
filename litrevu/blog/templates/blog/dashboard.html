@@ -73,7 +73,7 @@
                     {% if post.ticket %}
                         <div class="associated-ticket">
                             <p>Ticket - {{ post.ticket.user.username }}</p>
-                            <h4>{{ post.ticket.title }}</h4>                            
+                            <h4>{{ post.ticket.title }}<h4>                            
                             {% if post.ticket.image %}
                                 <div class="image-container">
                                     <img src="{{ post.ticket.image.url }}" alt="Image pour le ticket {{ post.ticket.title }}" class="ticket-image">

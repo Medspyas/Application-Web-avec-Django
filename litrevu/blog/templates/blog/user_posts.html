@@ -17,40 +17,65 @@
     <div class="posts-container">
         {% for post in user_posts %}
             {% if post.type == 'ticket' %}
-                <div class="ticket">
-                    <h2>{{ post.title }}</h2>
-                    <p>{{ post.description }}</p>
-                    {% if post.image %}
-                        <div class="image-container">
-                            <img src="{{post.image.url}}" alt="Image pour le ticket {{ post.title }}" class="ticket-image">
-                        </div>
-                    {% endif %}
-                    <small>Posté par {{ post.user.username }} le  {{ post.created_at }}</small>
+            <div class="ticket">
+                <h3 class="title-post">Vous avez demandé une critique</h3>
+                <p>{{ post.description }}</p>
+                {% if post.image %}
+                    <div class="image-container">
+                        <img src="{{post.image.url}}" alt="Image pour le ticket {{ post.title }}" class="ticket-image">
+                    </div>
+                {% endif %}
+                <span class="review-date">{{ post.created_at|date:"H:i, d M Y"}}</span>
                     
-                    <a href="{% url 'ticket_edit' post.id %}"><button>Modifier</button></a>
-                    <a href="{% url 'post_delete' model='ticket' pk=post.id %}"><button>Supprimer</button></a>
+                
+                    
+                <a href="{% url 'ticket_edit' post.id %}"><button class="style-button resize btn-modifier">Modifier</button></a>
+                <a href="{% url 'post_delete' model='ticket' pk=post.id %}"><button class="style-button resize" >Supprimer</button></a>
+                
                 </div>
             {% elif post.type == 'review' %}
-                <div class="review">
-                    {% if post.ticket %}
-                        <h2>{{ post.ticket.title }}</h2>
-                    {% else %}
-                        <h2>Critique indépendante</h2>
-                    {% endif %}
-                    <p><strong>Critique de {{ post.user.username }}</strong></p>
-                    <p>{{ post.content }}</p>
-                    <p>Note : {{ post.rating }} / 5 - 
-                        {% for _ in post.full_stars %}
-                            <span style="color: black; font-size: 1.2rem;">&#9733;</span>
-                        {% endfor %}
-                        {% for _ in post.empty_stars %}
-                            <span style="color: lightgray; font-size: 1.2rem;">&#9734;</span>
-                        {% endfor %}
-                    </p>
-                    <small>Posté le {{ post.created_at }}</small>
-                    <a href="{% url 'review_edit' post.id %}"><button>Modifier</button></a>
-                    <a href="{% url 'post_delete' model='review' pk=post.id %}"><button>Supprimer</button></a>
+            <div class="review">
+                <div class="review-header">
+                    <h3 class="title-post">
+                        {% if request.user.username == post.user.username %}
+                            Vous avez publié une critique
+                        {% else %}
+                            {{ post.user.username }} a publié une critique
+                        {% endif %}
+                    </h3>                                        
+                        
+                    <span class="review-date">{{ post.created_at|date:"H:i, d M Y" }}</span>
                 </div>
+                <p class="review-title"> {{ post.review_title }} - 
+
+                    {% for _ in post.full_stars %}
+                        <span style="color: black; font-size: 1.2rem;" class="review-rating">&#9733;</span>
+                    {% endfor %}
+                    {% for _ in post.empty_stars %}
+                        <span style="color: lightgray; font-size: 1.2rem;" class="review-rating">&#9734;</span>
+                    {% endfor %}
+                </p>
+                <p>{{ post.content }}</p>
+                
+
+                {% if post.ticket %}
+                    <div class="associated-ticket">
+                        <p>Ticket - {{ post.ticket.user.username }}</p>
+                        <h4>{{ post.ticket.title }}<h4>                            
+                        {% if post.ticket.image %}
+                            <div class="image-container">
+                                <img src="{{ post.ticket.image.url }}" alt="Image pour le ticket {{ post.ticket.title }}" class="ticket-image">
+                            </div>                    
+                            {% endif %}
+                    </div>
+                {% endif %}
+                
+                <div class="buttons_reviews">
+                    <a href="{% url 'review_edit' post.id %}"><button class="style-button resize">Modifier</button></a>
+                    <a href="{% url 'post_delete' model='review' pk=post.id %}"><button class="style-button resize">Supprimer</button></a>
+                </div>
+                
+            </div> 
             {% endif %}
         {% endfor %}
     </div>

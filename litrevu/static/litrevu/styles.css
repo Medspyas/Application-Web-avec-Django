@@ -51,6 +51,7 @@ body{
     border: 2px solid #000;
     padding: 20px;
     min-height: 200px;
+    margin-bottom: 15px !important;
 }
 
 .home-container{
@@ -177,6 +178,8 @@ form input::placeholder {
 }
 
 
+
+
 .image-container{
     margin: 10px 0;
     
@@ -286,17 +289,23 @@ form input::placeholder {
     font-size: 20px;
  }
 
+
 .ticket-form {
     width: auto;
     margin-left: 50px !important;
     margin: 0 auto;
     display: flex;
-    flex-direction: column;
-    gap: 20px;
+    flex-direction: column !important;
+    gap: 20px;    
+    
 }
 .ticket-form label {
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 15px;
+}
+
+.ticket-form div {
+    margin-bottom: 20px;
 }
 
 .ticket-form input[type="text"], .ticket-form textarea, .ticket-form select {
@@ -304,7 +313,10 @@ form input::placeholder {
     box-sizing: border-box;
     font-size: 16px;
     padding: 10px;
+    font-weight: lighter;
 }
+
+
 
 .ticket-form textarea {
     resize: none;
@@ -369,5 +381,56 @@ form input::placeholder {
     margin-top: 50px;
 }
 
+.ticket-details {
+    border: 1px solid #000;
+    padding: 10px;
+    margin-bottom: 20px;
+    width: 90%;
+}
+
+.ticket-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;    
+    font-size: 14px;
+}
+
+.ticket-title {
+    font-weight: lighter;
+}
+
+.button-group {
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px !important;
+
+}
+
+.style-button.resize.btn-modifier{    
+    position: absolute !important;
+    right: 170px;
+    
+}
 
 
+.buttons_reviews {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-bottom: 10px;
+    margin-right: 20px;
+}
+
+.style-button.resize.custom {
+    margin-top: 20px;
+    margin-left: 15px;
+}
+
+
+.buton-container.ticket_form{
+    border: none;
+    padding: 0;
+    margin: 0;
+    max-width: none;
+    
+}

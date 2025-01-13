@@ -55,8 +55,12 @@ def dashboard(request):
 
     for post in posts:
         if post.type == 'review':
-            post.full_stars = range(post.rating)
-            post.empty_stars = range(5 - post.rating)
+            if post.rating is not None:
+                post.full_stars = range(post.rating)
+                post.empty_stars = range(5 - post.rating)
+            else:
+                post.full_stars = range(0)
+                post.empty_stars = range(5)
     
     return render(request, 'blog/dashboard.html', {'posts': posts})
 
@@ -73,8 +77,12 @@ def user_posts(request):
 
     for post in user_posts:
         if post.type == 'review':
-            post.full_stars = range(post.rating)
-            post.empty_stars = range(5 - post.rating)
+            if post.rating is not None:
+                post.full_stars = range(post.rating)
+                post.empty_stars = range(5 - post.rating)
+        else:
+                post.full_stars = range(0)
+                post.empty_stars = range(5)
     return render(request, 'blog/user_posts.html', {'user_posts': user_posts})
 
         
@@ -103,6 +111,12 @@ class ReviewWithTicket(CreateView):
         ticket_id = self.kwargs.get("ticket_id")
         form.instance.ticket = get_object_or_404(Ticket, id=ticket_id)
         return super().form_valid(form)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        ticket_id = self.kwargs.get("ticket_id")
+        context['ticket'] = get_object_or_404(Ticket, id=ticket_id)
+        return context
     
     def get_success_url(self):
         return '/dashboard/'

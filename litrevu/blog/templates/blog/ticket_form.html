@@ -2,13 +2,35 @@
 
 {% block content %}
 
+<p class="title-ticket">Modifier votre ticket</p>
 
-<h2 class="title-ticket">Modifier votre ticket</h2>
-<form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Enregistrer</button>
+<form method="post" enctype="multipart/form-data" class="ticket-form">
+    {% csrf_token %} 
+
+    <div>
+        <label for="id_title">Titre</label>
+        {{ form.title }}
+    </div>
+    <div>
+        <label for="id_description">Description</label>
+        {{ form.description }}
+    </div>  
+
+    {% if object.image %}
+    <div class="current-image">
+        <p>Image</p>
+        <img src="{{object.image.url}}" alt="Image pour le ticket {{ object.image.title }}" class="ticket-image">
+    </div>
+    {% endif %}
+
+    
+    <div>
+    <label for="id_image" class="style-button resize custom">Télécharger fichier</label>
+    <input type="file" name="image" id="id_image" style="display: none;">
+    </div>
+    <div class="buton-container ticket_form">
+        <button type="submit" class="style-button resize">Envoyer</button>
+    </div>  
 </form>
 
-<a href="{% url 'dashboard' %}">Annuler</a>
 {% endblock %}
