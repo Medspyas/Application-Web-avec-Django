@@ -2,12 +2,25 @@
 
 {% block content %}
 
-<h1>Demander une critique</h1>
+<p class="title-ticket">Créer un ticket</p>
 
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{form.as_p}}
-    <button type="submit" class="style-button">Envoyer</button>
+<form method="post" enctype="multipart/form-data" class="ticket-form">
+    {% csrf_token %} 
+
+    <div>
+        <label for="id_title">Titre</label>
+        {{ form.title }}
+    </div>
+    <div>
+        <label for="id_description">Description</label>
+        {{ form.description }}
+    </div>  
+
+    <label for="id_image" class="style-button resize">Télécharger fichier</label>
+    <input type="file" name="image" id="id_image" style="display: none;">
+    <div class="buton-container">
+        <button type="submit" class="style-button resize">Envoyer</button>
+    </div>  
 </form>
 
 {% endblock %}

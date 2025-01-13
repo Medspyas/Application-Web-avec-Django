@@ -2,14 +2,72 @@
 
 {% block content %}
 
+<h2 class="title-ticket">Créer une critique</h2>
 
-<div class="review-create-container">
-    <h2>Créer une critique</h2>
+<div class="ticket-form">   
 
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Envoyer</button>
+
+        <div>
+            <label for="id_review_title">Titre</label>
+            {{ form.review_title }}
+        </div>
+        <br>
+        <div>
+            <label for="id_description">Description</label>
+            {{ form.description }}
+        </div>
+
+        
+        <br>
+        <label for="id_image" class="image-title">Image</label>
+        <label for="id_image" class="style-button resize">Télécharger fichier</label>        
+        <input type="file" name="image" id="id_image" style="display: none;">
+        <br>
+
+        <hr class="separator-line">
+
+        <p>Critique</p>
+
+        <div>
+            <label for="id_title">Titre</label>
+            {{ form.review_title }}
+        </div>
+
+        <br>
+
+        <div class="rating-container">
+            <label for="rating">Note</label>
+            <div class="radio-group">
+                <input type="radio" id="rating-0" name="rating" value="0">
+                <label for="rating-0">- 0</label>
+        
+                <input type="radio" id="rating-1" name="rating" value="1">
+                <label for="rating-1">- 1</label>
+        
+                <input type="radio" id="rating-2" name="rating" value="2">
+                <label for="rating-2">- 2</label>
+        
+                <input type="radio" id="rating-3" name="rating" value="3">
+                <label for="rating-3">- 3</label>
+        
+                <input type="radio" id="rating-4" name="rating" value="4">
+                <label for="rating-4">- 4</label>
+        
+                <input type="radio" id="rating-5" name="rating" value="5">
+                <label for="rating-5">- 5</label>
+            </div>
+
+        <div>
+            <label for="id_content">Commentaire</label>
+            {{ form.content }}
+        </div>
+
+
+        <div class="buton-container">
+        <button type="submit" class="style-button resize">Envoyer</button>
+        </div>
     </form>
 </div>
 

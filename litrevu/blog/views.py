@@ -1,7 +1,7 @@
 from itertools import chain
 from django.db.models import CharField, Value
 from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.auth.forms import AuthenticationForm
+
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.cache import never_cache
 from .models import *
@@ -12,6 +12,7 @@ from django.urls import reverse_lazy
 from django.http import Http404
 from django.contrib.auth import get_user_model, authenticate, login
 from django.contrib import messages
+from django import forms
 
 User = get_user_model()
 
@@ -113,6 +114,18 @@ class ReviewWithoutTicket(CreateView):
     template_name = 'blog/review_without_ticket.html'
     fields = ['title', 'description', 'image', 'review_title','rating', 'content']
 
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        form.fields['rating'].widget = forms.RadioSelect(choices=[
+            (0, '0'),
+            (1, '1'),
+            (2, '2'),
+            (3, '3'),
+            (4, '4'),
+            (5, '5')
+        ])
+        return form
+    
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)

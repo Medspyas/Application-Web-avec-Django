@@ -37,53 +37,55 @@
                             <img src="{{post.image.url}}" alt="Image pour le ticket {{ post.title }}" class="ticket-image">
                         </div>
                     {% endif %}
-                    <small>Posté par {{ post.user.username }} le  {{ post.created_at|date:"H:i, d M Y"}}</small>
-                    {% if not post.user.is_authenticated and not post.review_set.exists %}                       
+                    <span class="review-date">{{ post.created_at|date:"H:i, d M Y"}}</span>
+                    {% if post.user != request.user and not post.reviews.exists %}                       
                         <a href="{% url 'review_with_ticket' ticket_id=post.id  %}">
-                            <button class="style-button">Créer une critique</button>
+                            <button class="style-button resize">Créer une critique</button>
                         </a>                        
-                    {% endif %}
-                    
+                    {% endif %}                    
                 </div>
+                
             {% elif post.type == 'review' %}
                 <div class="review">
-                    
+                    <div class="review-header">
                         <h3 class="title-post">
                             {% if request.user.username == post.user.username %}
                                 Vous avez publié une critique
                             {% else %}
                                 {{ post.user.username }} a publié une critique
                             {% endif %}
-                        </h3>                                          
-                    {% endif %}
-                    <p><strong>Critique de {{ post.user.username }}</strong></p>
-                    <p>{{ post.content }}</p>
-                    <p>{{ post.rating }} / 5 - 
+                        </h3>                                        
+                            
+                        <span class="review-date">{{ post.created_at|date:"H:i, d M Y" }}</span>
+                    </div>
+                    <p class="review-title"> {{ post.review_title }} - 
+
                         {% for _ in post.full_stars %}
-                            <span style="color: black; font-size: 1.2rem;">&#9733;</span>
+                            <span style="color: black; font-size: 1.2rem;" class="review-rating">&#9733;</span>
                         {% endfor %}
                         {% for _ in post.empty_stars %}
-                            <span style="color: lightgray; font-size: 1.2rem;">&#9734;</span>
+                            <span style="color: lightgray; font-size: 1.2rem;" class="review-rating">&#9734;</span>
                         {% endfor %}
                     </p>
-                    <small>Posté le {{ post.created_at|date:"H:i, d M Y" }}</small>
+                    <p>{{ post.content }}</p>
+                    
 
                     {% if post.ticket %}
-                    <div class="ticket">
-                        <p>Ticket - {{ post.ticket.user.username }}</p>
-                        <h4>{{ post.ticket.title }}</h4>
-                        <p>{{ post.ticket.description }}</p>
-                        {% if post.ticket.image %}
-                            <div class="image-container">
-                                <img src="{{ post.ticket.image.url }}" alt="Image pour le ticket {{ post.ticket.title }}" class="ticket-image">
-                            </div>
-                        {% endif %}                    
-                    </div>
-                     
-                </div>
-            {% endif %}
+                        <div class="associated-ticket">
+                            <p>Ticket - {{ post.ticket.user.username }}</p>
+                            <h4>{{ post.ticket.title }}</h4>                            
+                            {% if post.ticket.image %}
+                                <div class="image-container">
+                                    <img src="{{ post.ticket.image.url }}" alt="Image pour le ticket {{ post.ticket.title }}" class="ticket-image">
+                                </div>                    
+                                {% endif %}
+                        </div>
+                    {% endif %}                
+                    
+                </div>                
+            {% endif %}                    
         {% endfor %}
-
+    </div>
     
    
 

@@ -31,7 +31,7 @@ class UserFollows(models.Model):
 
     class Meta:
         unique_together = ('follower', 'followed')
-        verbose_name= 'Relation de suivi'
+        verbose_name = 'Relation de suivi'
         verbose_name_plural = 'Relation de suivi'
 
     def __str__(self):
