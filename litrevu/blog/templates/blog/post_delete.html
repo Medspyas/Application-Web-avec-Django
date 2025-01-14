@@ -3,16 +3,16 @@
 {% block content %}
 
 
-<div class="review-create-container">
+<div class="post_delete_container">
     <h2>Confirmer la suppression</h2>
     <p>Voulez vous vraiment supprimer ?</p>
 
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Oui</button>
+        <button type="submit" class="style-button resize">Oui</button>
     </form>
-    <a href="{% url 'dashboard' %}">Annuler</a>
+    <a href="{% url 'dashboard' %}" class="style-button resize cancel-button">Annuler</a>
 </div>
 
 {% endblock %}

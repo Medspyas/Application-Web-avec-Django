@@ -342,26 +342,36 @@ form input::placeholder {
 
 .radio-group {
     display: flex;
+    flex-direction: row !important;
     align-items: center;    
     margin-left: 10px;
-    gap: 30px !important;
+    
+    padding: 0;
+    
 }
 
 .radio-group label {
-    display: flex;
+    display: inline-block;
     align-items: center;
-    gap: 5px;
+    margin:0 ;
+    
     
 }
 
 .radio-group input[type='radio'] {
     margin: 0;
+    border: 1px solid red;
 }
 
 .rating-container input[type="radio"] {
     margin: 0 5px;
     accent-color: black;
-    
+    border: 1px solid red;
+}
+
+.radio-item {
+    display: flex;
+    margin-left: 40px;
 }
 
 .separator-line {
@@ -433,4 +443,111 @@ form input::placeholder {
     margin: 0;
     max-width: none;
     
+}
+
+.post_delete_container {
+    max-width: 600px;
+    margin: 50px auto;
+    text-align: center;   
+    padding: 20px;    
+}
+
+.post_delete_container h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.post_delete_container p{
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.cancel-button {
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    color:black;
+    padding: 0;
+    margin: 0;
+    margin-top: 20px;
+    line-height: 40px;
+    width: 140px;
+    height: 38px;
+}
+
+.follow-title {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+    font-weight: lighter;
+}
+
+.follow-form {
+    display: flex;
+    justify-content: center;
+    gap: 35px;
+    margin-bottom: 40px;
+}
+
+.input-field {
+    width: 700px !important;
+    height: 20px !important;
+}
+
+.follow-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center !important;
+}
+
+.follow-table {
+    width: 95%;    
+    margin: 0 20px;
+    border-collapse: collapse;
+}
+
+.follow-table tr {
+    border: 1px solid #000;
+}
+
+
+
+.button-follow { 
+    text-align: right;
+    width: 20%;
+    padding: 0;
+}
+
+.follow-button {
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: white;
+    border: none;
+    border-left: 1px solid #000;
+    text-decoration: none;
+    cursor: pointer;
+    height: 100%;
+}
+
+.abonne-table td {
+    padding: 4px 0 !important;    
+}
+
+.error-messages {
+    margin-top: 5px;
+    padding: 0;
+    list-style: none;
+    font-size: 14px;
+}
+
+.error-messages .error {
+    margin: 0;
+    padding: 0;
+}
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }

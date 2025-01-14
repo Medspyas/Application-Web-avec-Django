@@ -4,31 +4,44 @@
 
 {% block content %}
 
-<h1>Suivre d'autres utilisateurs</h1>
+<div class="follow-section">
+    <h1 class="follow-title">Suivre d'autres utilisateurs</h1>
 
-<form method="POST">
-    {% csrf_token %}
-    <input type="text" name="followed_username" placeholder="Nom d'utilisateur" required>
-    <button type="submit">Envoyer</button>
-</form>
+    <form method="POST" class="follow-form">
+        {% csrf_token %}
+        <div class="input-container">
+            <input type="text" name="followed_username" placeholder="Nom d'utilisateur" required class="input-field">
+            {% if messages %}
+                <ul class="error-messages">
+                    {% for message in messages %}
+                        {% if message.tags == 'error' %}
+                            <li class="error">{{ message }}</li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+        <button type="submit" class="style-button resize">Envoyer</button>
+    </form>
+</div>
 
-<h2>Abonnements</h2>
-<table>
+<h2 class="follow-title">Abonnements</h2>
+<table class="follow-table">
     {% for follow in following %}
     <tr>
-        <td>{{follow.followed.username}}</td>
-        <td>
+        <td class="username-section">{{follow.followed.username}}</td>
+        <td class="button-follow">
             <form method="POST" action="{% url 'unfollow' follow.followed.id %}">
                 {% csrf_token %}
-                <button type="submit">Désabonner</button>
+                <button type="submit" class="follow-button">Désabonner</button>
             </form>
         </td>
     </tr>
     {% endfor %}
 </table>
 
-<h2>Abonnés</h2>
-<table>
+<h2 class="follow-title">Abonnés</h2>
+<table class="follow-table abonne-table">
     {% for follow in followers %}
     <tr>
         <td>{{follow.follower.username}}</td>

@@ -40,9 +40,10 @@ def home(request):
 
 @login_required
 def dashboard(request):
-    tickets = Ticket.objects.all()    
-    reviews = Review.objects.all()
-    
+    followed_users = UserFollows.objects.filter(follower=request.user).values_list('followed', flat=True)
+
+    tickets = Ticket.objects.filter(user__id__in=followed_users)
+    reviews = Review.objects.filter(user__id__in=followed_users)        
 
     tickets =tickets.annotate(type=Value('ticket', output_field=CharField()))
     reviews = reviews.annotate(type=Value('review', output_field=CharField()))
@@ -196,11 +197,18 @@ class PostDelete(DeleteView):
 def manage_follows(request):
     if request.method == 'POST':
         followed_username = request.POST.get('followed_username')
-        followed_user = get_object_or_404(User, username=followed_username)
-
-        if followed_user == request.user:
-            messages.warning(request, f'Vous suivez déja {followed_user.username}')
+        
+        try:
+            followed_user = User.objects.get(username=followed_username)
+        except:
+            messages.error(request, f'Cet utilisateur n\u2019existe pas.')
             return redirect('manage_follows')
+        
+        if UserFollows.objects.filter(follower=request.user, followed=followed_user):
+            messages.error(request, f'Vous suivez déja cet utilisateur') 
+            return redirect('manage_follows')          
+
+        
         
         UserFollows.objects.create(follower=request.user, followed=followed_user)
         messages.success(request, f'Vous suivez maintenant {followed_user.username}')
