@@ -6,19 +6,19 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('blog', '0003_review_image'),
+        ("blog", "0003_review_image"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='review',
-            name='description',
+            model_name="review",
+            name="description",
             field=models.TextField(blank=True, max_length=1000, null=True),
         ),
         migrations.AddField(
-            model_name='review',
-            name='review_title',
-            field=models.CharField(default='', max_length=200),
+            model_name="review",
+            name="review_title",
+            field=models.CharField(default="", max_length=200),
             preserve_default=False,
         ),
     ]
