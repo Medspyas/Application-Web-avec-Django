@@ -15,6 +15,11 @@ class SignupForm(UserCreationForm):
         self.fields["password1"].help_text = None
         self.fields["password2"].help_text = None
 
+
+        self.fields["username"].label = "Identifiant"
+        self.fields["password1"].label = "Mot de passe"
+        self.fields["password2"].label = "Confirmation Mot de passe"
+
         for field_name, field in self.fields.items():
             field.widget.attrs.update(
                 {"class": "form-control", "placeholder": field.label}

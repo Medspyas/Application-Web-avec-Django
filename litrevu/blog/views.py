@@ -202,8 +202,7 @@ def manage_follows(request):
             messages.error(request, "Vous suivez déja cet utilisateur")
             return redirect("manage_follows")
 
-        UserFollows.objects.create(follower=request.user, followed=followed_user)
-        messages.success(request, f"Vous suivez maintenant {followed_user.username}")
+        UserFollows.objects.create(follower=request.user, followed=followed_user)        
         return redirect("manage_follows")
     following = UserFollows.objects.filter(follower=request.user)
     followers = UserFollows.objects.filter(followed=request.user)
