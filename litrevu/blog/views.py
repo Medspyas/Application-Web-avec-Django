@@ -1,5 +1,5 @@
 from itertools import chain
-from django.db.models import CharField, Value
+from django.db.models import CharField, Value, Q
 from django.shortcuts import render, get_object_or_404, redirect
 
 from django.contrib.auth.decorators import login_required
@@ -41,8 +41,10 @@ def dashboard(request):
         "followed", flat=True
     )
 
-    tickets = Ticket.objects.filter(user__id__in=followed_users)
-    reviews = Review.objects.filter(user__id__in=followed_users)
+    tickets = Ticket.objects.filter(~Q(user=request.user))
+    reviews = Review.objects.filter(
+        Q(user__id__in=followed_users) | Q(ticket__user=request.user) & Q(ticket__isnull=False)
+        )
 
     tickets = tickets.annotate(type=Value("ticket", output_field=CharField()))
     reviews = reviews.annotate(type=Value("review", output_field=CharField()))
@@ -102,7 +104,7 @@ class TicketCreateView(LoginRequiredMixin, CreateView):
         return "/dashboard/"
 
 
-class ReviewWithTicket(CreateView):
+class ReviewWithTicket(LoginRequiredMixin, CreateView):
     model = Review
     template_name = "blog/review_with_ticket.html"
     fields = ["review_title", "rating", "content"]

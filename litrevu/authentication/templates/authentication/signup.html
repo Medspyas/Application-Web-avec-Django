@@ -7,8 +7,9 @@
 
     <form method="POST">
         {% csrf_token %}
+        {{ form.non_field_errors }}
         {{ form.as_p }}
-             
+        
         <div class="button-group">    
             <button type="submit" class="style-button resize">S'inscrire</button> 
             <a href="{% url 'home' %}" class="style-button resize">Retour</a>           

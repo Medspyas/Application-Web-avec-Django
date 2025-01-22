@@ -44,11 +44,7 @@ urlpatterns = [
     path("dashboard/", dashboard, name="dashboard"),
     path("posts/", user_posts, name="user_posts"),
     path("request-ticket/", TicketCreateView.as_view(), name="request_ticket"),
-    path(
-        "review/ticket/<int:ticket_id>/",
-        ReviewWithTicket.as_view(),
-        name="review_with_ticket",
-    ),
+    path("review/ticket/<int:ticket_id>/", ReviewWithTicket.as_view(), name="review_with_ticket"),
     path("review/create/", ReviewWithoutTicket.as_view(), name="review_without_ticket"),
     path("ticket/<int:pk>/edit/", TicketUpdate.as_view(), name="ticket_edit"),
     path("review/<int:pk>/edit/", ReviewUpdate.as_view(), name="review_edit"),
