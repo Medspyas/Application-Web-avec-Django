@@ -4,6 +4,7 @@ from django import forms
 
 
 class SignupForm(UserCreationForm):
+    # Personalisation du formaulaire d'inscription.
     class Meta(UserCreationForm.Meta):
         model = get_user_model()
         fields = ("username",)
@@ -14,7 +15,6 @@ class SignupForm(UserCreationForm):
         self.fields["username"].help_text = None
         self.fields["password1"].help_text = None
         self.fields["password2"].help_text = None
-
 
         self.fields["username"].label = "Identifiant"
         self.fields["password1"].label = "Mot de passe"
@@ -35,6 +35,7 @@ class SignupForm(UserCreationForm):
 
 
 class CustomAuthenticationForm(AuthenticationForm):
+    # Personnalisation du formulaire d'authentification.
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["username"].label = ""

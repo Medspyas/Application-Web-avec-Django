@@ -19,6 +19,7 @@ User = get_user_model()
 
 @never_cache
 def home(request):
+    # Récuperation de données utilisateur pour l'authentification
     form = CustomAuthenticationForm()
 
     if request.method == "POST":
@@ -37,14 +38,16 @@ def home(request):
 
 @login_required
 def dashboard(request):
+    # Récuperation des données de lutilisateur et de ses abonnés
     followed_users = UserFollows.objects.filter(follower=request.user).values_list(
         "followed", flat=True
     )
 
     tickets = Ticket.objects.filter(~Q(user=request.user))
     reviews = Review.objects.filter(
-        Q(user__id__in=followed_users) | Q(ticket__user=request.user) & Q(ticket__isnull=False)
-        )
+        Q(user__id__in=followed_users)
+        | Q(ticket__user=request.user) & Q(ticket__isnull=False)
+    )
 
     tickets = tickets.annotate(type=Value("ticket", output_field=CharField()))
     reviews = reviews.annotate(type=Value("review", output_field=CharField()))
@@ -67,6 +70,7 @@ def dashboard(request):
 
 @login_required
 def user_posts(request):
+    # Récuperation des données de l'utilisateur seulement
     user_tickets = Ticket.objects.filter(user=request.user).annotate(
         type=Value("ticket", output_field=CharField())
     )
@@ -92,24 +96,29 @@ def user_posts(request):
 
 
 class TicketCreateView(LoginRequiredMixin, CreateView):
+    # Permet de créer un ticket grâce a la fonctionalité CreateView
     model = Ticket
     template_name = "blog/request_ticket.html"
     fields = ["title", "description", "image"]
 
     def form_valid(self, form):
+        # Associe le ticket à l'utilisateur
         form.instance.user = self.request.user
         return super().form_valid(form)
 
     def get_success_url(self):
+        # En cas de succés on redirige au tableau de bord
         return "/dashboard/"
 
 
 class ReviewWithTicket(LoginRequiredMixin, CreateView):
+    # Permet de créer une critique grâce a la fonctionalité CreateView
     model = Review
     template_name = "blog/review_with_ticket.html"
     fields = ["review_title", "rating", "content"]
 
     def form_valid(self, form):
+        # Associe la critique à l'utilisateur
         form.instance.user = self.request.user
 
         ticket_id = self.kwargs.get("ticket_id")
@@ -117,6 +126,7 @@ class ReviewWithTicket(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
+        # Permet de récupérer un ticket spécifique à partir de son ID et l'ajoute au contexte de la vue
         context = super().get_context_data(**kwargs)
         ticket_id = self.kwargs.get("ticket_id")
         context["ticket"] = get_object_or_404(Ticket, id=ticket_id)
@@ -147,11 +157,13 @@ class ReviewWithoutTicket(CreateView):
 
 
 class TicketUpdate(UpdateView):
+    # Permet de modifier un ticket
     model = Ticket
     template_name = "blog/ticket_form.html"
     fields = ["title", "description", "image"]
 
     def get_queryset(self):
+        # Récupère le ticket à l'utilisateur connecté.
         return Ticket.objects.filter(user=self.request.user)
 
     def get_success_url(self):
@@ -159,13 +171,13 @@ class TicketUpdate(UpdateView):
 
 
 class ReviewUpdate(UpdateView):
+    # Permet de modifier une critique
     model = Review
     template_name = "blog/review_form.html"
     fields = ["review_title", "content", "rating", "image"]
 
     def get_queryset(self):
         queryset = Review.objects.filter(user=self.request.user)
-        print("Critiques accessibles :", queryset)
         return queryset
 
     def get_success_url(self):
@@ -173,9 +185,11 @@ class ReviewUpdate(UpdateView):
 
 
 class PostDelete(DeleteView):
+    # Permet de supprimer un post de l'utilisateur connecter avec DeleteView
     template_name = "blog/post_delete.html"
 
     def get_object(self, queryset=None):
+        # Récupère l'objet à supprimer en fonction du type et de son ID:pk
         model = self.kwargs.get("model")
         pk = self.kwargs.get("pk")
         if model == "ticket":
@@ -191,6 +205,7 @@ class PostDelete(DeleteView):
 
 @login_required
 def manage_follows(request):
+    # Permet de suivre un utilisateur en vérifiant la véracité de la donnée entrer et affiche les listes abonnés/abonnement
     if request.method == "POST":
         followed_username = request.POST.get("followed_username")
 
@@ -204,7 +219,7 @@ def manage_follows(request):
             messages.error(request, "Vous suivez déja cet utilisateur")
             return redirect("manage_follows")
 
-        UserFollows.objects.create(follower=request.user, followed=followed_user)        
+        UserFollows.objects.create(follower=request.user, followed=followed_user)
         return redirect("manage_follows")
     following = UserFollows.objects.filter(follower=request.user)
     followers = UserFollows.objects.filter(followed=request.user)
@@ -218,6 +233,7 @@ def manage_follows(request):
 
 @login_required
 def unfollow(request, user_id):
+    # Permet de se désabonner d'un utilisateur en supprimant la relation de suivi dans la base de donnée
     followed_user = get_object_or_404(User, id=user_id)
     follow = UserFollows.objects.filter(
         follower=request.user, followed=followed_user

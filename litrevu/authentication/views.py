@@ -7,6 +7,7 @@ from . import forms
 
 
 def signup_page(request):
+    # récupération des données utilisateur et création de compte utilisateur et authentification.
     form = forms.SignupForm()
     if request.method == "POST":
         form = forms.SignupForm(request.POST)

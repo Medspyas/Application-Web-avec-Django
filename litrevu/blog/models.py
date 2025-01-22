@@ -5,6 +5,7 @@ from django.urls import reverse
 
 
 class Ticket(models.Model):
+    # Modele du ticket avec ses champs personnaliser
     title = models.CharField(max_length=200)
     description = models.TextField(max_length=1000, blank=True, null=True)
     image = models.ImageField(upload_to="tickets/", blank=True, null=True)
@@ -16,6 +17,7 @@ class Ticket(models.Model):
 
 
 class UserFollows(models.Model):
+    # Modèle de la relation de suivi entre deux utilisateurs
     follower = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="following"
     )
@@ -36,6 +38,7 @@ class UserFollows(models.Model):
 
 
 class Review(models.Model):
+    # Modèle de la critique avec ou sans ticket
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     ticket = models.ForeignKey(
         "Ticket",
