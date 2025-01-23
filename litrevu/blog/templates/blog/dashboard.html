@@ -67,7 +67,12 @@
                         {% endfor %}
                     </p>
                     <p>{{ post.content }}</p>
-                    
+
+                    {% if post.image %}
+                        <div class="image-container">
+                            <img src="{{ post.image.url }}" alt="Image de la critique {{ post.review_title }}" class="ticket-image*">
+                        </div>
+                    {% endif %}
 
                     {% if post.ticket %}
                         <div class="associated-ticket">

@@ -56,6 +56,12 @@
                     {% endfor %}
                 </p>
                 <p>{{ post.content }}</p>
+
+                {% if post.image %}
+                        <div class="image-container">
+                            <img src="{{ post.image.url }}" alt="Image de la critique {{ post.review_title }}" class="ticket-image">
+                        </div>
+                {% endif %}
                 
 
                 {% if post.ticket %}
@@ -71,7 +77,11 @@
                 {% endif %}
                 
                 <div class="buttons_reviews">
-                    <a href="{% url 'review_edit' post.id %}"><button class="style-button resize">Modifier</button></a>
+                    {% if post.ticket %}
+                        <a href="{% url 'review_edit' post.id %}"><button class="style-button resize">Modifier</button></a>
+                    {% else %}
+                        <a href="{% url 'review_update_without_ticket' post.id %}"><button class="style-button resize">Modifier</button></a>
+                    {% endif %}
                     <a href="{% url 'post_delete' model='review' pk=post.id %}"><button class="style-button resize">Supprimer</button></a>
                 </div>
                 

@@ -184,6 +184,20 @@ class ReviewUpdate(UpdateView):
         return reverse_lazy("dashboard")
 
 
+class ReviewUpdateWithoutTicket(UpdateView):
+    # Permet de modifier une critique sans ticket
+    model = Review
+    template_name = "blog/review_update_without_ticket.html"
+    fields = ["title", "description", "image", "review_title", "content", "rating"]
+
+    def get_queryset(self):
+        queryset = Review.objects.filter(user=self.request.user)
+        return queryset
+
+    def get_success_url(self):
+        return reverse_lazy("dashboard")
+
+
 class PostDelete(DeleteView):
     # Permet de supprimer un post de l'utilisateur connecter avec DeleteView
     template_name = "blog/post_delete.html"

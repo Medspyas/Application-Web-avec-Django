@@ -30,6 +30,7 @@ from blog.views import (
     TicketUpdate,
     PostDelete,
     ReviewUpdate,
+    ReviewUpdateWithoutTicket,
     manage_follows,
     unfollow,
 )
@@ -51,7 +52,14 @@ urlpatterns = [
     ),
     path("review/create/", ReviewWithoutTicket.as_view(), name="review_without_ticket"),
     path("ticket/<int:pk>/edit/", TicketUpdate.as_view(), name="ticket_edit"),
-    path("review/<int:pk>/edit/", ReviewUpdate.as_view(), name="review_edit"),
+    path(
+        "review/<int:pk>/edit_with_ticket/", ReviewUpdate.as_view(), name="review_edit"
+    ),
+    path(
+        "review/<int:pk>/edit_without_ticket/",
+        ReviewUpdateWithoutTicket.as_view(),
+        name="review_update_without_ticket",
+    ),
     path("<str:model>/<int:pk>/delete/", PostDelete.as_view(), name="post_delete"),
     path("follows/", manage_follows, name="manage_follows"),
     path("unfollow/<int:user_id>/", unfollow, name="unfollow"),
